@@ -2,7 +2,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:task_flow/models/task.dart';
 import 'package:task_flow/providers/task_provider.dart';
 import 'package:task_flow/widgets/task_list_item.dart';
 
@@ -87,7 +86,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                 itemCount: filteredTasks.length,
                 itemBuilder: (context, index) {
                   final task = filteredTasks[index];
-                  return TaskListItem(task: task);
+                  return TaskListItem(task: task, index: index);
                 },
               );
             },
@@ -117,7 +116,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         labelStyle: GoogleFonts.inter(
           color: isSelected
               ? theme.colorScheme.onPrimary
-              : theme.colorScheme.onSurface.withOpacity(0.6),
+              : theme.colorScheme.onSurface.withValues(alpha: 0.6),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

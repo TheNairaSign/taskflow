@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_flow/models/task.dart';
 import 'package:task_flow/screens/task_details_screen.dart';
+import 'package:task_flow/routes/app_page_route.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
@@ -86,7 +87,7 @@ class TaskCard extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    AppPageRoute(
                       builder: (context) => TaskDetailsScreen(task: task),
                     ),
                   );

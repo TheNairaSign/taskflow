@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/providers/auth_provider.dart';
+import 'package:task_flow/routes/app_page_route.dart';
 import 'package:task_flow/screens/dashboard_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscureText = true;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -141,22 +143,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Provider.of<AuthProvider>(context, listen: false)
-                          .login(
-                        _emailController.text,
-                        _passwordController.text,
-                      )
-                          .then((_) {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const DashboardScreen(),
-                          ),
-                        );
-                      });
-                    }
-                  },
+                  onPressed: _isLoading
+                      ? null
+                      : () {
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            Provider.of<AuthProvider>(context, listen: false)
+                                .login(
+                              _emailController.text,
+                              _passwordController.text,
+                            )
+                                .then((_) {
+                              Navigator.of(context).pushReplacement(
+                                AppPageRoute(
+                                  builder: (context) =>
+                                      const DashboardScreen(),
+                                ),
+                              );
+                            }).whenComplete(() {
+                              if (mounted) {
+                                setState(() {
+                                  _isLoading = false;
+                                });
+                              }
+                            });
+                          }
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -164,21 +178,39 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Sign In',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: theme.colorScheme.onPrimary,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Icon(EvaIcons.arrowForward,
-                          color: theme.colorScheme.onPrimary),
-                    ],
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: _isLoading
+                        ? SizedBox(
+                            key: const ValueKey('loading'),
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                theme.colorScheme.onPrimary,
+                              ),
+                            ),
+                          )
+                        : Row(
+                            key: const ValueKey('text'),
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Sign In',
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.onPrimary,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Icon(
+                                EvaIcons.arrowForward,
+                                color: theme.colorScheme.onPrimary,
+                              ),
+                            ],
+                          ),
                   ),
                 ),
                 const SizedBox(height: 30),

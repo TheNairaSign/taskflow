@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/providers/task_provider.dart';
+import 'package:task_flow/routes/app_page_route.dart';
 import 'package:task_flow/screens/task_details_screen.dart';
 
 class TaskList extends StatelessWidget {
@@ -38,7 +39,7 @@ class TaskList extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  AppPageRoute(
                     builder: (context) => TaskDetailsScreen(task: task),
                   ),
                 );

@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:task_flow/models/task.dart';
+import 'package:task_flow/routes/app_page_route.dart';
 import 'package:task_flow/screens/create_update_task_screen.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
@@ -12,6 +13,7 @@ class TaskDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -37,24 +39,38 @@ class TaskDetailsScreen extends StatelessWidget {
             Text(
               task.title,
               style: GoogleFonts.inter(
-                fontSize: 28,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 16),
-            Chip(
-              label: Text(
-                task.status.toUpperCase().replaceAll('_', ' '),
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeInOut,
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: _getStatusColor(task.status).withValues(alpha: 0.8),
+                borderRadius: BorderRadius.circular(
+                  task.status == 'completed' ? 24 : 12,
                 ),
               ),
-              backgroundColor: _getStatusColor(task.status).withOpacity(0.8),
-              avatar: Icon(
-                _getStatusIcon(task.status),
-                color: Colors.white,
-                size: 16,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    _getStatusIcon(task.status),
+                    color: Colors.white,
+                    size: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    task.status.toUpperCase().replaceAll('_', ' '),
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 24),
@@ -62,12 +78,12 @@ class TaskDetailsScreen extends StatelessWidget {
               task.description,
               style: GoogleFonts.inter(
                 fontSize: 16,
-                color: theme.colorScheme.onSurface.withOpacity(0.8),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.8),
                 height: 1.5,
               ),
             ),
             const SizedBox(height: 24),
-            const Divider(),
+            Divider(color: isDark ? Colors.grey[700] : Colors.grey[300],),
             const SizedBox(height: 24),
             _buildDetailRow(
               context,
@@ -107,7 +123,7 @@ class TaskDetailsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  AppPageRoute(
                     builder: (context) => CreateUpdateTaskScreen(task: task),
                   ),
                 );
@@ -127,8 +143,7 @@ class TaskDetailsScreen extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  side: BorderSide(
-                      color: theme.colorScheme.onSurface.withOpacity(0.2)),
+                  side: BorderSide(color: theme.colorScheme.onSurface.withValues(alpha: 0.2)),
                 ),
               ),
             ),
@@ -139,20 +154,22 @@ class TaskDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildDetailRow(BuildContext context,
-      {required IconData icon,
+    {
+      required IconData icon,
       required String title,
       String? value,
-      Widget? valueWidget}) {
+      Widget? valueWidget
+    }) {
     final theme = Theme.of(context);
     return Row(
       children: [
-        Icon(icon, color: theme.colorScheme.onSurface.withOpacity(0.6)),
+        Icon(icon, color: theme.colorScheme.onSurface.withValues(alpha: 0.6)),
         const SizedBox(width: 16),
         Text(
           title,
           style: GoogleFonts.inter(
             fontSize: 16,
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         const Spacer(),

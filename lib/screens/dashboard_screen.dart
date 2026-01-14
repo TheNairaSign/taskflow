@@ -6,6 +6,7 @@ import 'package:task_flow/providers/task_provider.dart';
 import 'package:task_flow/screens/all_tasks_screen.dart';
 import 'package:task_flow/screens/create_update_task_screen.dart';
 import 'package:task_flow/screens/profile_screen.dart';
+import 'package:task_flow/routes/app_page_route.dart';
 import 'package:task_flow/widgets/bottom_nav_bar.dart';
 import 'package:task_flow/widgets/task_card.dart';
 
@@ -46,7 +47,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  AppPageRoute(
                     builder: (context) => const CreateUpdateTaskScreen(),
                   ),
                 );
@@ -119,7 +120,7 @@ class DashboardContent extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    AppPageRoute(
                       builder: (context) => const AllTasksScreen(),
                     ),
                   );

@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/models/task.dart';
 import 'package:task_flow/providers/task_provider.dart';
@@ -20,6 +21,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
   late TextEditingController _descriptionController;
   late bool _isCompleted;
   late DateTime _dueDate;
+  bool _isSubmitting = false;
 
   @override
   void initState() {
@@ -28,9 +30,19 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
     _descriptionController =
         TextEditingController(text: widget.task?.description ?? '');
     _isCompleted = widget.task?.status == 'completed';
-    _dueDate = widget.task != null
-        ? DateTime.parse(widget.task!.dueDate)
-        : DateTime.now();
+    if (widget.task != null) {
+      try {
+        _dueDate = DateFormat('MMM d, yyyy').parse(widget.task!.dueDate);
+      } catch (e) {
+        try {
+          _dueDate = DateTime.parse(widget.task!.dueDate);
+        } catch (e) {
+          _dueDate = DateTime.now();
+        }
+      }
+    } else {
+      _dueDate = DateTime.now();
+    }
   }
 
   @override
@@ -51,13 +63,29 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
         ),
         actions: [
           TextButton(
-            onPressed: _submit,
-            child: Text(
-              'Done',
-              style: GoogleFonts.inter(
-                color: theme.colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+            onPressed: _isSubmitting ? null : _submit,
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 200),
+              child: _isSubmitting
+                  ? SizedBox(
+                      key: const ValueKey('appbar_loading'),
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          theme.colorScheme.primary,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      'Done',
+                      key: const ValueKey('appbar_done'),
+                      style: GoogleFonts.inter(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
           ),
         ],
@@ -137,7 +165,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
               ),
               const SizedBox(height: 40),
               ElevatedButton(
-                onPressed: _submit,
+                onPressed: _isSubmitting ? null : _submit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: theme.colorScheme.primary,
                   minimumSize: const Size(double.infinity, 56),
@@ -145,13 +173,29 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: Text(
-                  'Create Task',
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: theme.colorScheme.onPrimary,
-                  ),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: _isSubmitting
+                      ? SizedBox(
+                          key: const ValueKey('submit_loading'),
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              theme.colorScheme.onPrimary,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          'Create Task',
+                          key: const ValueKey('submit_text'),
+                          style: GoogleFonts.inter(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.onPrimary,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -281,6 +325,9 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isSubmitting = true;
+      });
       final task = Task(
         id: widget.task?.id,
         userId: widget.task?.userId ?? 1, // Mock user ID
@@ -299,7 +346,12 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
       } else {
         taskProvider.updateTask(task);
       }
-      Navigator.of(context).pop();
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+        Navigator.of(context).pop();
+      }
     }
   }
 }
