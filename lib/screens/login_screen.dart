@@ -146,30 +146,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _isLoading
                       ? null
                       : () {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              _isLoading = true;
-                            });
-                            Provider.of<AuthProvider>(context, listen: false)
-                                .login(
-                              _emailController.text,
-                              _passwordController.text,
-                            )
-                                .then((_) {
-                              Navigator.of(context).pushReplacement(
-                                AppPageRoute(
-                                  builder: (context) =>
-                                      const DashboardScreen(),
-                                ),
-                              );
-                            }).whenComplete(() {
-                              if (mounted) {
-                                setState(() {
-                                  _isLoading = false;
-                                });
-                              }
-                            });
+                          final formState = _formKey.currentState;
+                          if (formState == null || !formState.validate()) {
+                            return;
                           }
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .login(
+                            _emailController.text,
+                            _passwordController.text,
+                          )
+                              .then((_) {
+                            Navigator.of(context).pushReplacement(
+                              AppPageRoute(
+                                builder: (context) =>
+                                    const DashboardScreen(),
+                              ),
+                            );
+                          }).whenComplete(() {
+                            if (mounted) {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                            }
+                          });
                         },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.primary,

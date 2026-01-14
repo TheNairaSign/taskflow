@@ -102,8 +102,10 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: ChoiceChip(
+        side: BorderSide.none,
         label: Text(label),
         selected: isSelected,
+        checkmarkColor: Colors.white,
         onSelected: (selected) {
           if (selected) {
             setState(() {
@@ -114,8 +116,9 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         backgroundColor: theme.colorScheme.surface,
         selectedColor: theme.colorScheme.primary,
         labelStyle: GoogleFonts.inter(
+          fontWeight: FontWeight.bold,
           color: isSelected
-              ? theme.colorScheme.onPrimary
+              ? Colors.white
               : theme.colorScheme.onSurface.withValues(alpha: 0.6),
         ),
         shape: RoundedRectangleBorder(

@@ -9,6 +9,7 @@ import 'package:task_flow/screens/profile_screen.dart';
 import 'package:task_flow/routes/app_page_route.dart';
 import 'package:task_flow/widgets/bottom_nav_bar.dart';
 import 'package:task_flow/widgets/task_card.dart';
+import 'package:task_flow/models/task.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -137,19 +138,29 @@ class DashboardContent extends StatelessWidget {
           const SizedBox(height: 20),
           Consumer<TaskProvider>(
             builder: (context, taskProvider, child) {
-              if (taskProvider.tasks.isEmpty) {
+              if (taskProvider.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return SizedBox(
-                height: 220,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: taskProvider.tasks.length,
-                  itemBuilder: (context, index) {
-                    final task = taskProvider.tasks[index];
-                    return TaskCard(task: task);
-                  },
-                ),
+              if (taskProvider.error != null) {
+                return Center(child: Text('Error: ${taskProvider.error}'));
+              }
+              if (taskProvider.tasks.isEmpty) {
+                return const Center(child: Text('No active tasks.'));
+              }
+              // Sort by ID descending to get newest tasks and take top 3
+              final recentTasks = List<Task>.from(taskProvider.tasks)
+                ..sort((a, b) => (b.id ?? 0).compareTo(a.id ?? 0));
+              final displayTasks = recentTasks.take(3).toList();
+
+              return Column(
+                spacing: 15,
+                children: [
+                  for (final task in displayTasks)
+                    SizedBox(
+                      height: 220,
+                      child: TaskCard(task: task),
+                    ),
+                ],
               );
             },
           ),

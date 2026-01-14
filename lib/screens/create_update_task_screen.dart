@@ -324,34 +324,36 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
   }
 
   void _submit() {
-    if (_formKey.currentState!.validate()) {
+    final formState = _formKey.currentState;
+    if (formState == null || !formState.validate()) {
+      return;
+    }
+    setState(() {
+      _isSubmitting = true;
+    });
+    final task = Task(
+      id: widget.task?.id,
+      userId: widget.task?.userId ?? 1, // Mock user ID
+      title: _titleController.text,
+      description: _descriptionController.text,
+      dueDate: _dueDate.toIso8601String(),
+      project: widget.task?.project ?? 'New Project',
+      priority: widget.task?.priority ?? 'Medium Priority',
+      status: _isCompleted ? 'completed' : 'pending',
+    );
+
+    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+
+    if (widget.task == null) {
+      taskProvider.createTask(task);
+    } else {
+      taskProvider.updateTask(task);
+    }
+    if (mounted) {
       setState(() {
-        _isSubmitting = true;
+        _isSubmitting = false;
       });
-      final task = Task(
-        id: widget.task?.id,
-        userId: widget.task?.userId ?? 1, // Mock user ID
-        title: _titleController.text,
-        description: _descriptionController.text,
-        dueDate: _dueDate.toIso8601String(),
-        project: widget.task?.project ?? 'New Project',
-        priority: widget.task?.priority ?? 'Medium Priority',
-        status: _isCompleted ? 'completed' : 'pending',
-      );
-
-      final taskProvider = Provider.of<TaskProvider>(context, listen: false);
-
-      if (widget.task == null) {
-        taskProvider.createTask(task);
-      } else {
-        taskProvider.updateTask(task);
-      }
-      if (mounted) {
-        setState(() {
-          _isSubmitting = false;
-        });
-        Navigator.of(context).pop();
-      }
+      Navigator.of(context).pop();
     }
   }
 }
