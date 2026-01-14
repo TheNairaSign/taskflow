@@ -11,6 +11,7 @@ class TaskDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -61,12 +62,12 @@ class TaskDetailsScreen extends StatelessWidget {
               task.description,
               style: GoogleFonts.inter(
                 fontSize: 16,
-                color: Colors.white.withOpacity(0.8),
+                color: theme.colorScheme.onSurface.withOpacity(0.8),
                 height: 1.5,
               ),
             ),
             const SizedBox(height: 24),
-            const Divider(color: Colors.white24),
+            const Divider(),
             const SizedBox(height: 24),
             _buildDetailRow(
               context,
@@ -111,21 +112,23 @@ class TaskDetailsScreen extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(EvaIcons.edit2Outline, color: Colors.white),
+              icon: Icon(EvaIcons.edit2Outline,
+                  color: theme.colorScheme.onSurface),
               label: Text(
                 'Edit Task',
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF1E1E1E),
+                backgroundColor: theme.colorScheme.surface,
                 minimumSize: const Size(double.infinity, 56),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  side: const BorderSide(color: Colors.white24),
+                  side: BorderSide(
+                      color: theme.colorScheme.onSurface.withOpacity(0.2)),
                 ),
               ),
             ),
@@ -140,15 +143,16 @@ class TaskDetailsScreen extends StatelessWidget {
       required String title,
       String? value,
       Widget? valueWidget}) {
+    final theme = Theme.of(context);
     return Row(
       children: [
-        Icon(icon, color: Colors.white.withOpacity(0.6)),
+        Icon(icon, color: theme.colorScheme.onSurface.withOpacity(0.6)),
         const SizedBox(width: 16),
         Text(
           title,
           style: GoogleFonts.inter(
             fontSize: 16,
-            color: Colors.white.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withOpacity(0.6),
           ),
         ),
         const Spacer(),
@@ -156,7 +160,7 @@ class TaskDetailsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFF1E1E1E),
+              color: theme.colorScheme.surface,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(

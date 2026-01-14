@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/providers/auth_provider.dart';
 import 'package:task_flow/screens/dashboard_screen.dart';
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -29,10 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(
+                Icon(
                   EvaIcons.checkmarkSquare2Outline,
                   size: 60,
-                  color: Color(0xFF3D7BFF),
+                  color: theme.colorScheme.primary,
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -58,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.inter(
                     fontSize: 16,
-                    color: Colors.white.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 const SizedBox(height: 40),
@@ -67,11 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     labelText: 'EMAIL ADDRESS',
                     labelStyle: GoogleFonts.inter(
-                      color: Colors.white.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontWeight: FontWeight.w600,
                     ),
                     filled: true,
-                    fillColor: const Color(0xFF1E1E1E),
+                    fillColor: theme.colorScheme.surface,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide.none,
@@ -94,19 +96,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     labelText: 'PASSWORD',
                     labelStyle: GoogleFonts.inter(
-                      color: Colors.white.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontWeight: FontWeight.w600,
                     ),
                     filled: true,
-                    fillColor: const Color(0xFF1E1E1E),
+                    fillColor: theme.colorScheme.surface,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide.none,
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscureText ? EvaIcons.eyeOffOutline : EvaIcons.eyeOutline,
-                        color: Colors.white.withOpacity(0.6),
+                        _obscureText
+                            ? EvaIcons.eyeOffOutline
+                            : EvaIcons.eyeOutline,
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                       onPressed: () {
                         setState(() {
@@ -130,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Text(
                       'Forgot?',
                       style: GoogleFonts.inter(
-                        color: const Color(0xFF3D7BFF),
+                        color: theme.colorScheme.primary,
                       ),
                     ),
                   ),
@@ -154,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3D7BFF),
+                    backgroundColor: theme.colorScheme.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -168,11 +172,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: theme.colorScheme.onPrimary,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      const Icon(EvaIcons.arrowForward, color: Colors.white),
+                      Icon(EvaIcons.arrowForward,
+                          color: theme.colorScheme.onPrimary),
                     ],
                   ),
                 ),
@@ -181,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Expanded(
                       child: Divider(
-                        color: Colors.white.withOpacity(0.2),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
                         thickness: 1,
                       ),
                     ),
@@ -190,14 +195,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         'SECURE LOG IN WITH',
                         style: GoogleFonts.inter(
-                          color: Colors.white.withOpacity(0.6),
+                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     Expanded(
                       child: Divider(
-                        color: Colors.white.withOpacity(0.2),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
                         thickness: 1,
                       ),
                     ),
@@ -209,14 +214,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: () {},
-                        icon: Icon(EvaIcons.arrowUp, color: Colors.white),
+                        icon: Icon(Ionicons.logo_apple,
+                            color: theme.colorScheme.onSurface),
                         label: Text(
                           'Apple',
-                          style: GoogleFonts.inter(color: Colors.white),
+                          style: GoogleFonts.inter(
+                              color: theme.colorScheme.onSurface),
                         ),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: BorderSide(color: Colors.white.withOpacity(0.2)),
+                          side: BorderSide(
+                              color:
+                                  theme.colorScheme.onSurface.withValues(alpha: 0.2)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -227,14 +236,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     Expanded(
                       child: OutlinedButton.icon(
                         onPressed: () {},
-                        icon: const Icon(EvaIcons.google, color: Colors.white),
+                        icon: Icon(EvaIcons.google,
+                            color: theme.colorScheme.onSurface),
                         label: Text(
                           'Google',
-                          style: GoogleFonts.inter(color: Colors.white),
+                          style: GoogleFonts.inter(
+                              color: theme.colorScheme.onSurface),
                         ),
                         style: OutlinedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: BorderSide(color: Colors.white.withOpacity(0.2)),
+                          side: BorderSide(
+                              color:
+                                  theme.colorScheme.onSurface.withValues(alpha: 0.2)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -250,7 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       "New to TaskFlow?",
                       style: GoogleFonts.inter(
-                        color: Colors.white.withOpacity(0.6),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                     TextButton(
@@ -258,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Text(
                         'Create Account',
                         style: GoogleFonts.inter(
-                          color: const Color(0xFF3D7BFF),
+                          color: theme.colorScheme.primary,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

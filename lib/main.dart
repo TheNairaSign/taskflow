@@ -20,6 +20,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final darkTheme = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: const Color(0xFF121212),
+      primaryColor: const Color(0xFF3D7BFF),
+      textTheme: GoogleFonts.interTextTheme(
+        ThemeData.dark().textTheme,
+      ),
+      colorScheme: const ColorScheme.dark(
+        primary: Color(0xFF3D7BFF),
+        secondary: Color(0xFF3D7BFF),
+        background: Color(0xFF121212),
+        surface: Color(0xFF1E1E1E),
+      ),
+    );
+
+    final lightTheme = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: Colors.white,
+      primaryColor: const Color(0xFF3D7BFF),
+      textTheme: GoogleFonts.interTextTheme(
+        ThemeData.light().textTheme,
+      ),
+      colorScheme: const ColorScheme.light(
+        primary: Color(0xFF3D7BFF),
+        secondary: Color(0xFF3D7BFF),
+        background: Colors.white,
+        surface: Color(0xFFF0F0F0),
+      ),
+    );
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider(sharedPreferences)),
@@ -30,22 +62,12 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'TaskFlow',
-            theme: ThemeData(
-              useMaterial3: true,
-              brightness: Brightness.dark,
-              scaffoldBackgroundColor: const Color(0xFF121212),
-              primaryColor: const Color(0xFF3D7BFF),
-              textTheme: GoogleFonts.interTextTheme(
-                ThemeData.dark().textTheme,
-              ),
-              colorScheme: const ColorScheme.dark(
-                primary: Color(0xFF3D7BFF),
-                secondary: Color(0xFF3D7BFF),
-                background: Color(0xFF121212),
-                surface: Color(0xFF1E1E1E),
-              ),
-            ),
-            home: auth.isAuthenticated ? const DashboardScreen() : const LoginScreen(),
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: ThemeMode.system,
+            home: auth.isAuthenticated
+                ? const DashboardScreen()
+                : const LoginScreen(),
             routes: {
               '/login': (context) => const LoginScreen(),
             },

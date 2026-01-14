@@ -35,13 +35,14 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
             'Back',
-            style: GoogleFonts.inter(color: const Color(0xFF3D7BFF)),
+            style: GoogleFonts.inter(color: theme.colorScheme.primary),
           ),
         ),
         title: Text(
@@ -54,7 +55,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
             child: Text(
               'Done',
               style: GoogleFonts.inter(
-                color: const Color(0xFF3D7BFF),
+                color: theme.colorScheme.primary,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -80,17 +81,19 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 'Organize your workflow and set goals.',
                 style: GoogleFonts.inter(
                   fontSize: 16,
-                  color: Colors.white.withOpacity(0.6),
+                  color: theme.colorScheme.onSurface.withOpacity(0.6),
                 ),
               ),
               const SizedBox(height: 40),
               _buildTextField(
+                context,
                 controller: _titleController,
                 labelText: 'TASK TITLE',
                 hintText: 'e.g., Q3 Design Review',
               ),
               const SizedBox(height: 20),
               _buildTextField(
+                context,
                 controller: _descriptionController,
                 labelText: 'DESCRIPTION',
                 hintText: 'What needs to be done?',
@@ -101,11 +104,12 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 'CONFIGURATION',
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.bold,
-                  color: Colors.white.withOpacity(0.6),
+                  color: theme.colorScheme.onSurface.withOpacity(0.6),
                 ),
               ),
               const SizedBox(height: 20),
               _buildConfigurationTile(
+                context,
                 icon: EvaIcons.checkmarkCircle2Outline,
                 title: 'Mark as Completed',
                 subtitle: 'Start task as finished',
@@ -116,25 +120,26 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                       _isCompleted = value;
                     });
                   },
-                  activeColor: const Color(0xFF3D7BFF),
+                  activeColor: theme.colorScheme.primary,
                 ),
               ),
               const SizedBox(height: 16),
               _buildConfigurationTile(
+                context,
                 icon: EvaIcons.calendarOutline,
                 title: 'Due Date',
                 subtitle: '${_dueDate.toLocal()}'.split(' ')[0],
                 onTap: _selectDate,
-                trailing: const Icon(
+                trailing: Icon(
                   EvaIcons.arrowIosForwardOutline,
-                  color: Colors.white,
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3D7BFF),
+                  backgroundColor: theme.colorScheme.primary,
                   minimumSize: const Size(double.infinity, 56),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -145,7 +150,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                   style: GoogleFonts.inter(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: theme.colorScheme.onPrimary,
                   ),
                 ),
               ),
@@ -156,7 +161,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                   child: Text(
                     'Cancel',
                     style: GoogleFonts.inter(
-                      color: const Color(0xFF3D7BFF),
+                      color: theme.colorScheme.primary,
                     ),
                   ),
                 ),
@@ -168,12 +173,14 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
     );
   }
 
-  Widget _buildTextField({
+  Widget _buildTextField(
+    BuildContext context, {
     required TextEditingController controller,
     required String labelText,
     required String hintText,
     int maxLines = 1,
   }) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -181,7 +188,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
           labelText,
           style: GoogleFonts.inter(
             fontWeight: FontWeight.bold,
-            color: Colors.white.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withOpacity(0.6),
           ),
         ),
         const SizedBox(height: 8),
@@ -190,9 +197,10 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
           maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: GoogleFonts.inter(color: Colors.white.withOpacity(0.4)),
+            hintStyle:
+                GoogleFonts.inter(color: theme.colorScheme.onSurface.withOpacity(0.4)),
             filled: true,
-            fillColor: const Color(0xFF1E1E1E),
+            fillColor: theme.colorScheme.surface,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -209,24 +217,26 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
     );
   }
 
-  Widget _buildConfigurationTile({
+  Widget _buildConfigurationTile(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required String subtitle,
     Widget? trailing,
     VoidCallback? onTap,
   }) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF1E1E1E),
+          color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
-            Icon(icon, color: Colors.white),
+            Icon(icon, color: theme.colorScheme.onSurface),
             const SizedBox(width: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +252,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 Text(
                   subtitle,
                   style: GoogleFonts.inter(
-                    color: Colors.white.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
                   ),
                 ),
               ],

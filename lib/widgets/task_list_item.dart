@@ -9,11 +9,12 @@ class TaskListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -34,7 +35,7 @@ class TaskListItem extends StatelessWidget {
                 Text(
                   'DUE: ${task.dueDate}',
                   style: GoogleFonts.inter(
-                    color: Colors.white.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -44,14 +45,14 @@ class TaskListItem extends StatelessWidget {
                   style: GoogleFonts.inter(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: theme.colorScheme.onSurface,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Project: ${task.project}',
                   style: GoogleFonts.inter(
-                    color: Colors.white.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withOpacity(0.6),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -72,10 +73,11 @@ class TaskListItem extends StatelessWidget {
                       label: Text(
                         task.status,
                         style: GoogleFonts.inter(
-                          color: Colors.white,
+                          color: theme.colorScheme.onSurface,
                         ),
                       ),
-                      backgroundColor: Colors.white.withOpacity(0.1),
+                      backgroundColor:
+                          theme.colorScheme.onSurface.withOpacity(0.1),
                     ),
                   ],
                 ),
@@ -87,12 +89,12 @@ class TaskListItem extends StatelessWidget {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: theme.colorScheme.onSurface.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.image,
-              color: Colors.white,
+              color: theme.colorScheme.onSurface,
             ),
           ),
         ],

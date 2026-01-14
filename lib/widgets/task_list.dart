@@ -31,9 +31,9 @@ class TaskList extends StatelessWidget {
               subtitle: Text('Task ID: ${task.id}'),
               trailing: Chip(
                 label: Text(task.status == 'completed' ? 'Completed' : 'Pending'),
-                backgroundColor: task.status == 'completeted'
-                    ? Colors.green.withOpacity(0.2)
-                    : Colors.orange.withOpacity(0.2),
+                backgroundColor: task.status == 'completed'
+                    ? Colors.green.withValues(alpha: 0.2)
+                    : Colors.orange.withValues(alpha: 0.2),
               ),
               onTap: () {
                 Navigator.push(

@@ -34,6 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: _screens.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavBar(
@@ -50,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 );
               },
-              backgroundColor: const Color(0xFF3D7BFF),
+              backgroundColor: theme.colorScheme.primary,
               child: const Icon(EvaIcons.plus),
             )
           : null,
@@ -64,6 +65,7 @@ class DashboardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SafeArea(
       child: ListView(
         padding: const EdgeInsets.all(24),
@@ -90,7 +92,7 @@ class DashboardContent extends StatelessWidget {
                   Text(
                     'alex.r@taskflow.io',
                     style: GoogleFonts.inter(
-                      color: Colors.white.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
                 ],
@@ -125,7 +127,7 @@ class DashboardContent extends StatelessWidget {
                 child: Text(
                   'View All',
                   style: GoogleFonts.inter(
-                    color: const Color(0xFF3D7BFF),
+                    color: theme.colorScheme.primary,
                   ),
                 ),
               ),

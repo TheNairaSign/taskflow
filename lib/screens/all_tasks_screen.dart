@@ -18,6 +18,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -47,7 +48,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
               hintText: 'Search tasks, projects...',
               prefixIcon: const Icon(EvaIcons.searchOutline),
               filled: true,
-              fillColor: const Color(0xFF1E1E1E),
+              fillColor: theme.colorScheme.surface,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 borderSide: BorderSide.none,
@@ -97,6 +98,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
   }
 
   Widget _buildFilterChip(String label) {
+    final theme = Theme.of(context);
     final isSelected = _selectedFilter == label;
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
@@ -110,10 +112,12 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
             });
           }
         },
-        backgroundColor: const Color(0xFF1E1E1E),
-        selectedColor: const Color(0xFF3D7BFF),
+        backgroundColor: theme.colorScheme.surface,
+        selectedColor: theme.colorScheme.primary,
         labelStyle: GoogleFonts.inter(
-          color: isSelected ? Colors.white : Colors.white.withOpacity(0.6),
+          color: isSelected
+              ? theme.colorScheme.onPrimary
+              : theme.colorScheme.onSurface.withOpacity(0.6),
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
