@@ -1,7 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/models/task.dart';
 import 'package:task_flow/models/task_priority.dart';
@@ -432,6 +431,8 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
       endTime: _endTime,
       teamId: _selectedTeamId,
       priority: _priority,
+      createdAt: widget.task?.createdAt ?? DateTime.now(),
+      updatedAt: DateTime.now(),
     );
 
     final taskProvider = Provider.of<TaskProvider>(context, listen: false);

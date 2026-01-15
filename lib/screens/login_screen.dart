@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextButton(
                     onPressed: () {},
                     child: Text(
-                      'Forgot?',
+                      'Forgot password?',
                       style: GoogleFonts.inter(
                         color: theme.colorScheme.primary,
                       ),
@@ -159,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             _passwordController.text,
                           )
                               .then((_) {
+                                if(!context.mounted) return;
                             Navigator.of(context).pushReplacement(
                               AppPageRoute(
                                 builder: (context) =>
@@ -203,94 +204,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: GoogleFonts.inter(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: theme.colorScheme.onPrimary,
+                                  color: Colors.white,
                                 ),
                               ),
                               const SizedBox(width: 10),
                               Icon(
                                 EvaIcons.arrowForward,
-                                color: theme.colorScheme.onPrimary,
+                                color: Colors.white,
                               ),
                             ],
                           ),
                   ),
                 ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                        thickness: 1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        'SECURE LOG IN WITH',
-                        style: GoogleFonts.inter(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.2),
-                        thickness: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(Ionicons.logo_apple,
-                            color: theme.colorScheme.onSurface),
-                        label: Text(
-                          'Apple',
-                          style: GoogleFonts.inter(
-                              color: theme.colorScheme.onSurface),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: BorderSide(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.2)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: Icon(EvaIcons.google,
-                            color: theme.colorScheme.onSurface),
-                        label: Text(
-                          'Google',
-                          style: GoogleFonts.inter(
-                              color: theme.colorScheme.onSurface),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: BorderSide(
-                              color:
-                                  theme.colorScheme.onSurface.withValues(alpha: 0.2)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -159,9 +159,8 @@ class DashboardContent extends StatelessWidget {
               if (taskProvider.tasks.isEmpty) {
                 return const Center(child: Text('No active tasks.'));
               }
-              // Sort by ID descending to get newest tasks and take top 3
               final recentTasks = List<Task>.from(taskProvider.tasks)
-                ..sort((a, b) => (b.id ?? 0).compareTo(a.id ?? 0));
+                ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
               final displayTasks = recentTasks.take(3).toList();
 
               return Wrap(

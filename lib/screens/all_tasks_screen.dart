@@ -101,6 +101,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                 final normalized = (task.status ?? 'pending').toLowerCase();
                 return normalized == _selectedFilter.toLowerCase().replaceAll(' ', '_');
               }).toList();
+              filteredTasks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
               return ListView.separated(
                 separatorBuilder: (context, index) => const SizedBox(height: 16),

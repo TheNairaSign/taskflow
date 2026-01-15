@@ -95,6 +95,8 @@ class ScheduleTimelineItem extends StatelessWidget {
                               endTime: task.endTime,
                               teamId: task.teamId,
                               status: (val ?? false) ? 'completed' : 'pending',
+                              createdAt: task.createdAt,
+                              updatedAt: DateTime.now(),
                             );
                             provider.updateTask(updated);
                           },

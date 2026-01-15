@@ -40,7 +40,7 @@ class TaskCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                task.status?.toUpperCase() ?? 'PENDING',
+                ((task.status ?? 'pending').replaceAll('_', ' ').toUpperCase()),
                 style: GoogleFonts.inter(
                   color: isCompleted
                       ? Colors.grey

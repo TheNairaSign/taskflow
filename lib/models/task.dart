@@ -15,6 +15,8 @@ class Task {
   final TimeOfDay? endTime;
   final String? teamId;
   final TaskPriority priority;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
 
   Task({
     this.id,
@@ -28,6 +30,8 @@ class Task {
     this.endTime,
     this.teamId,
     this.priority = TaskPriority.normal,
+    required this.createdAt,
+    this.updatedAt,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -43,6 +47,8 @@ class Task {
       endTime: json['endTime'] != null ? TimeOfDay(hour: int.parse(json['endTime'].split(':')[0]), minute: int.parse(json['endTime'].split(':')[1])) : null,
       teamId: json['teamId'],
       priority: _priorityFromString(json['priority']),
+      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : DateTime.now(),
+      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
     );
   }
 
@@ -59,6 +65,8 @@ class Task {
       'endTime': endTime != null ? '${endTime!.hour}:${endTime!.minute}' : null,
       'teamId': teamId,
       'priority': priority.toString().split('.').last,
+      'createdAt': createdAt.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
     };
   }
 

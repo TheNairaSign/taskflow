@@ -49,6 +49,8 @@ class TaskProvider with ChangeNotifier {
         scheduledDate: DateTime.now().add(const Duration(days: 2)),
         startTime: const TimeOfDay(hour: 14, minute: 0),
         endTime: const TimeOfDay(hour: 16, minute: 0),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 2,
@@ -60,6 +62,8 @@ class TaskProvider with ChangeNotifier {
         status: 'completed',
         teamId: 'engineering',
         scheduledDate: DateTime.now().subtract(const Duration(days: 1)),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 3,
@@ -73,6 +77,8 @@ class TaskProvider with ChangeNotifier {
         scheduledDate: DateTime.now(),
         startTime: const TimeOfDay(hour: 10, minute: 30),
         endTime: const TimeOfDay(hour: 11, minute: 30),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 4,
@@ -84,6 +90,8 @@ class TaskProvider with ChangeNotifier {
         status: 'in_progress',
         teamId: 'marketing',
         scheduledDate: DateTime.now().add(const Duration(days: 1)),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 5,
@@ -94,6 +102,8 @@ class TaskProvider with ChangeNotifier {
         priority: TaskPriority.normal,
         status: 'in_progress',
         teamId: 'engineering',
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 6,
@@ -107,6 +117,8 @@ class TaskProvider with ChangeNotifier {
         scheduledDate: DateTime.now(),
         startTime: const TimeOfDay(hour: 9, minute: 0),
         endTime: const TimeOfDay(hour: 9, minute: 30),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 7,
@@ -117,6 +129,8 @@ class TaskProvider with ChangeNotifier {
         priority: TaskPriority.high,
         status: 'completed',
         scheduledDate: DateTime.now().add(const Duration(days: 3)),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 8,
@@ -130,6 +144,8 @@ class TaskProvider with ChangeNotifier {
         scheduledDate: DateTime.now(),
         startTime: const TimeOfDay(hour: 8, minute: 0),
         endTime: const TimeOfDay(hour: 8, minute: 30),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 9,
@@ -143,6 +159,8 @@ class TaskProvider with ChangeNotifier {
         scheduledDate: DateTime.now(),
         startTime: const TimeOfDay(hour: 10, minute: 30),
         endTime: const TimeOfDay(hour: 12, minute: 0),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
       Task(
         id: 10,
@@ -156,6 +174,8 @@ class TaskProvider with ChangeNotifier {
         scheduledDate: DateTime.now(),
         startTime: const TimeOfDay(hour: 14, minute: 0),
         endTime: const TimeOfDay(hour: 15, minute: 30),
+        createdAt: DateTime.now(),
+        updatedAt: null,
       ),
     ];
 
