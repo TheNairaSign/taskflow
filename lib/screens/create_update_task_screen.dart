@@ -48,20 +48,26 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isUpdate = widget.task != null;
     return Scaffold(
       appBar: AppBar(
-        leading: TextButton(
+        leading: IconButton(
+          icon: const Icon(EvaIcons.arrowIosBackOutline),
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            'Back',
-            style: GoogleFonts.inter(color: theme.colorScheme.primary),
-          ),
         ),
         title: Text(
-          'New Task',
+          isUpdate ? 'Update Task' : 'New Task',
           style: GoogleFonts.inter(fontWeight: FontWeight.bold),
         ),
         actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancel',
+              style: GoogleFonts.inter(color: Colors.red,),
+            ),
+          ),
+          /*
           TextButton(
             onPressed: _isSubmitting ? null : _submit,
             child: AnimatedSwitcher(
@@ -88,6 +94,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                     ),
             ),
           ),
+          */
         ],
       ),
       body: SingleChildScrollView(
@@ -98,7 +105,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Create Task',
+                isUpdate ? 'Update Task' : 'New Task',
                 style: GoogleFonts.inter(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
@@ -109,7 +116,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 'Organize your workflow and set goals.',
                 style: GoogleFonts.inter(
                   fontSize: 16,
-                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
               ),
               const SizedBox(height: 40),
@@ -132,7 +139,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 'CONFIGURATION',
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onSurface.withOpacity(0.6),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
               ),
               const SizedBox(height: 20),
@@ -167,7 +174,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
               ElevatedButton(
                 onPressed: _isSubmitting ? null : _submit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.colorScheme.primary,
+                  backgroundColor: isUpdate ? Colors.green :  theme.colorScheme.primary,
                   minimumSize: const Size(double.infinity, 56),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -176,38 +183,26 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   child: _isSubmitting
-                      ? SizedBox(
-                          key: const ValueKey('submit_loading'),
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              theme.colorScheme.onPrimary,
-                            ),
-                          ),
-                        )
-                      : Text(
-                          'Create Task',
-                          key: const ValueKey('submit_text'),
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onPrimary,
+                    ? SizedBox(
+                        key: const ValueKey('submit_loading'),
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            theme.colorScheme.onPrimary,
                           ),
                         ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(
-                    'Cancel',
-                    style: GoogleFonts.inter(
-                      color: theme.colorScheme.primary,
-                    ),
-                  ),
+                      )
+                    : Text(
+                        isUpdate ? 'Update Task' : 'Create Task',
+                        key: const ValueKey('submit_text'),
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: isUpdate ? Colors.white : theme.colorScheme.onPrimary,
+                        ),
+                      ),
                 ),
               ),
             ],
@@ -232,7 +227,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
           labelText,
           style: GoogleFonts.inter(
             fontWeight: FontWeight.bold,
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         const SizedBox(height: 8),
@@ -242,7 +237,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle:
-                GoogleFonts.inter(color: theme.colorScheme.onSurface.withOpacity(0.4)),
+                GoogleFonts.inter(color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
             filled: true,
             fillColor: theme.colorScheme.surface,
             border: OutlineInputBorder(
@@ -296,7 +291,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 Text(
                   subtitle,
                   style: GoogleFonts.inter(
-                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
               ],

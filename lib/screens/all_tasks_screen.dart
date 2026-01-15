@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/providers/task_provider.dart';
-import 'package:task_flow/widgets/task_list_item.dart';
+import 'package:task_flow/screens/dashboard_screen.dart';
+import 'package:task_flow/widgets/task_card.dart';
 
 class AllTasksScreen extends StatefulWidget {
   const AllTasksScreen({super.key});
@@ -14,6 +15,13 @@ class AllTasksScreen extends StatefulWidget {
 
 class _AllTasksScreenState extends State<AllTasksScreen> {
   String _selectedFilter = 'All';
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +42,11 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
             icon: const Icon(EvaIcons.calendarOutline),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              final navProvider = Provider.of<NavigationProvider>(context, listen: false);
+              navProvider.updateIndex(3);
+              Navigator.of(context).pop();
+            },
             icon: const Icon(EvaIcons.personOutline),
           ),
         ],
@@ -80,13 +92,17 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                     _selectedFilter.toLowerCase().replaceAll(' ', '_');
               }).toList();
 
-              return ListView.builder(
+              return ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(height: 16),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: filteredTasks.length,
                 itemBuilder: (context, index) {
                   final task = filteredTasks[index];
-                  return TaskListItem(task: task, index: index);
+                  return SizedBox(
+                    height: 220,
+                    child: TaskCard(task: task)
+                  );
                 },
               );
             },

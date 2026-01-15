@@ -13,13 +13,12 @@ import 'package:task_flow/models/task.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
-
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
 
   static const List<Widget> _screens = <Widget>[
     DashboardContent(),
@@ -28,22 +27,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ProfileScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    
+    final navProvier = Provider.of<NavigationProvider>(context);
+    final selectedIndex = navProvier.currentIndex;
     final theme = Theme.of(context);
+
     return Scaffold(
-      body: _screens.elementAt(_selectedIndex),
+      body: _screens.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
+        selectedIndex: selectedIndex,
+        onItemTapped: navProvier.updateIndex,
       ),
-      floatingActionButton: _selectedIndex == 0
+      floatingActionButton: selectedIndex == 0
           ? FloatingActionButton(
               onPressed: () {
                 Navigator.push(
@@ -94,7 +91,7 @@ class DashboardContent extends StatelessWidget {
                   Text(
                     'alex.r@taskflow.io',
                     style: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                 ],
@@ -167,5 +164,15 @@ class DashboardContent extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class NavigationProvider extends ChangeNotifier {
+  int _currentIndex = 0;
+  int get currentIndex => _currentIndex;
+
+  void updateIndex(int index) {
+    _currentIndex = index;
+    notifyListeners();
   }
 }
