@@ -115,7 +115,7 @@ To run this project locally, follow these steps:
 'https://github.com/TheNairaSign/taskflow'
 
 ## APK Build
-You can download the latest APK from [YOUR_APK_BUILD_LINK]
+You can download the latest APK from 'https://github.com/TheNairaSign/taskflow/releases/tag/v1.0.0'
 
 ## Screenshots
 
