@@ -1,22 +1,33 @@
+import 'package:flutter/material.dart';
+import 'package:task_flow/models/task_priority.dart';
+
 class Task {
   final int? id;
   final int userId;
   final String title;
   final String description;
-  final String dueDate;
   final String project;
-  final String priority;
-  String status;
+  String? status;
+
+  // New fields
+  final DateTime? scheduledDate;
+  final TimeOfDay? startTime;
+  final TimeOfDay? endTime;
+  final String? teamId;
+  final TaskPriority priority;
 
   Task({
     this.id,
     required this.userId,
     required this.title,
     required this.description,
-    required this.dueDate,
     required this.project,
-    required this.priority,
-    required this.status,
+    this.status,
+    this.scheduledDate,
+    this.startTime,
+    this.endTime,
+    this.teamId,
+    this.priority = TaskPriority.normal,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -25,10 +36,13 @@ class Task {
       userId: json['userId'],
       title: json['title'],
       description: json['description'] ?? '',
-      dueDate: json['dueDate'] ?? '',
       project: json['project'] ?? '',
-      priority: json['priority'] ?? 'Medium Priority',
       status: json['completed'] == true ? 'completed' : 'pending',
+      scheduledDate: json['scheduledDate'] != null ? DateTime.parse(json['scheduledDate']) : null,
+      startTime: json['startTime'] != null ? TimeOfDay(hour: int.parse(json['startTime'].split(':')[0]), minute: int.parse(json['startTime'].split(':')[1])) : null,
+      endTime: json['endTime'] != null ? TimeOfDay(hour: int.parse(json['endTime'].split(':')[0]), minute: int.parse(json['endTime'].split(':')[1])) : null,
+      teamId: json['teamId'],
+      priority: _priorityFromString(json['priority']),
     );
   }
 
@@ -38,10 +52,30 @@ class Task {
       'userId': userId,
       'title': title,
       'description': description,
-      'dueDate': dueDate,
       'project': project,
-      'priority': priority,
       'completed': status == 'completed',
+      'scheduledDate': scheduledDate?.toIso8601String(),
+      'startTime': startTime != null ? '${startTime!.hour}:${startTime!.minute}' : null,
+      'endTime': endTime != null ? '${endTime!.hour}:${endTime!.minute}' : null,
+      'teamId': teamId,
+      'priority': priority.toString().split('.').last,
     };
+  }
+
+  static TaskPriority _priorityFromString(String? priority) {
+    if (priority == null) {
+      return TaskPriority.normal;
+    }
+    switch (priority.toLowerCase()) {
+      case 'high priority':
+      case 'high':
+        return TaskPriority.high;
+      case 'strategic':
+        return TaskPriority.strategic;
+      case 'medium priority':
+      case 'normal':
+      default:
+        return TaskPriority.normal;
+    }
   }
 }

@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_flow/providers/auth_provider.dart';
 import 'package:task_flow/providers/task_provider.dart';
+import 'package:task_flow/providers/team_provider.dart';
+import 'package:task_flow/providers/navigation_provider.dart';
 import 'package:task_flow/screens/dashboard_screen.dart';
 import 'package:task_flow/screens/login_screen.dart';
 
@@ -56,6 +58,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider(sharedPreferences)),
         ChangeNotifierProvider(create: (_) => TaskProvider()),
+        ChangeNotifierProvider(create: (_) => TeamProvider()),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
       ],
       child: Consumer<AuthProvider>(

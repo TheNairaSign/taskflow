@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/models/task.dart';
+import 'package:task_flow/models/task_priority.dart';
 import 'package:task_flow/providers/task_provider.dart';
+import 'package:task_flow/providers/team_provider.dart';
 
 class CreateUpdateTaskScreen extends StatefulWidget {
   final Task? task;
@@ -20,7 +22,11 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
   late bool _isCompleted;
-  late DateTime _dueDate;
+  late DateTime _scheduledDate;
+  TimeOfDay? _startTime;
+  TimeOfDay? _endTime;
+  String? _selectedTeamId;
+  TaskPriority _priority = TaskPriority.normal;
   bool _isSubmitting = false;
 
   @override
@@ -30,25 +36,19 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
     _descriptionController =
         TextEditingController(text: widget.task?.description ?? '');
     _isCompleted = widget.task?.status == 'completed';
-    if (widget.task != null) {
-      try {
-        _dueDate = DateFormat('MMM d, yyyy').parse(widget.task!.dueDate);
-      } catch (e) {
-        try {
-          _dueDate = DateTime.parse(widget.task!.dueDate);
-        } catch (e) {
-          _dueDate = DateTime.now();
-        }
-      }
-    } else {
-      _dueDate = DateTime.now();
-    }
+    _scheduledDate = widget.task?.scheduledDate ?? DateTime.now();
+    _startTime = widget.task?.startTime;
+    _endTime = widget.task?.endTime;
+    _selectedTeamId = widget.task?.teamId;
+    _priority = widget.task?.priority ?? TaskPriority.normal;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isUpdate = widget.task != null;
+    final teamProvider = Provider.of<TeamProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -67,34 +67,6 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
               style: GoogleFonts.inter(color: Colors.red,),
             ),
           ),
-          /*
-          TextButton(
-            onPressed: _isSubmitting ? null : _submit,
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 200),
-              child: _isSubmitting
-                  ? SizedBox(
-                      key: const ValueKey('appbar_loading'),
-                      width: 16,
-                      height: 16,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          theme.colorScheme.primary,
-                        ),
-                      ),
-                    )
-                  : Text(
-                      'Done',
-                      key: const ValueKey('appbar_done'),
-                      style: GoogleFonts.inter(
-                        color: theme.colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-            ),
-          ),
-          */
         ],
       ),
       body: SingleChildScrollView(
@@ -162,12 +134,75 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
               _buildConfigurationTile(
                 context,
                 icon: EvaIcons.calendarOutline,
-                title: 'Due Date',
-                subtitle: '${_dueDate.toLocal()}'.split(' ')[0],
+                title: 'Date',
+                subtitle: '${_scheduledDate.toLocal()}'.split(' ')[0],
                 onTap: _selectDate,
                 trailing: Icon(
                   EvaIcons.arrowIosForwardOutline,
                   color: theme.colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildConfigurationTile(
+                context,
+                icon: EvaIcons.clockOutline,
+                title: 'Start Time',
+                subtitle: _startTime?.format(context) ?? 'Not set',
+                onTap: () => _selectTime(isStart: true),
+                trailing: Icon(
+                  EvaIcons.arrowIosForwardOutline,
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildConfigurationTile(
+                context,
+                icon: EvaIcons.clockOutline,
+                title: 'End Time',
+                subtitle: _endTime?.format(context) ?? 'Not set',
+                onTap: () => _selectTime(isStart: false),
+                trailing: Icon(
+                  EvaIcons.arrowIosForwardOutline,
+                  color: theme.colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 20),
+              DropdownButtonFormField<String>(
+                value: _selectedTeamId,
+                hint: const Text('Assign to a team'),
+                onChanged: (value) {
+                  setState(() {
+                    _selectedTeamId = value;
+                  });
+                },
+                items: teamProvider.teams.map((team) {
+                  return DropdownMenuItem(
+                    value: team.id,
+                    child: Text(team.name),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(
+                  labelText: 'Team',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              DropdownButtonFormField<TaskPriority>(
+                value: _priority,
+                onChanged: (value) {
+                  setState(() {
+                    _priority = value!;
+                  });
+                },
+                items: TaskPriority.values.map((priority) {
+                  return DropdownMenuItem(
+                    value: priority,
+                    child: Text(priority.toString().split('.').last.toUpperCase()),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(
+                  labelText: 'Priority',
+                  border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 40),
@@ -307,13 +342,30 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
   Future<void> _selectDate() async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: _dueDate,
+      initialDate: _scheduledDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != _dueDate) {
+    if (picked != null && picked != _scheduledDate) {
       setState(() {
-        _dueDate = picked;
+        _scheduledDate = picked;
+      });
+    }
+  }
+
+  Future<void> _selectTime({required bool isStart}) async {
+    final initialTime = isStart ? _startTime : _endTime;
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: initialTime ?? TimeOfDay.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        if (isStart) {
+          _startTime = picked;
+        } else {
+          _endTime = picked;
+        }
       });
     }
   }
@@ -331,10 +383,13 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
       userId: widget.task?.userId ?? 1, // Mock user ID
       title: _titleController.text,
       description: _descriptionController.text,
-      dueDate: _dueDate.toIso8601String(),
       project: widget.task?.project ?? 'New Project',
-      priority: widget.task?.priority ?? 'Medium Priority',
       status: _isCompleted ? 'completed' : 'pending',
+      scheduledDate: _scheduledDate,
+      startTime: _startTime,
+      endTime: _endTime,
+      teamId: _selectedTeamId,
+      priority: _priority,
     );
 
     final taskProvider = Provider.of<TaskProvider>(context, listen: false);

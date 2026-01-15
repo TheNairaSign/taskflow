@@ -35,7 +35,7 @@ class TaskCard extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                task.status.toUpperCase(),
+                task.status?.toUpperCase() ?? 'PENDING',
                 style: GoogleFonts.inter(
                   color:
                       task.status == 'pending' ? Colors.orange : Colors.green,
@@ -75,7 +75,7 @@ class TaskCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    task.dueDate,
+                    formatDateToString(task.scheduledDate?? DateTime.now()),
                     style: GoogleFonts.inter(
                       color: theme.colorScheme.onSurface,
                     ),
@@ -105,3 +105,8 @@ class TaskCard extends StatelessWidget {
     );
   }
 }
+
+String formatDateToString(DateTime date) {
+  return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
+}
+

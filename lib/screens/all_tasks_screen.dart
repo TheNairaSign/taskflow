@@ -2,8 +2,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:task_flow/providers/navigation_provider.dart';
 import 'package:task_flow/providers/task_provider.dart';
-import 'package:task_flow/screens/dashboard_screen.dart';
 import 'package:task_flow/widgets/task_card.dart';
 
 class AllTasksScreen extends StatefulWidget {
@@ -44,7 +44,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
           IconButton(
             onPressed: () {
               final navProvider = Provider.of<NavigationProvider>(context, listen: false);
-              navProvider.updateIndex(3);
+              navProvider.setIndex(3);
               Navigator.of(context).pop();
             },
             icon: const Icon(EvaIcons.personOutline),
@@ -88,7 +88,7 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
                 if (_selectedFilter == 'All') {
                   return true;
                 }
-                return task.status.toLowerCase() ==
+                return task.status?.toLowerCase() ==
                     _selectedFilter.toLowerCase().replaceAll(' ', '_');
               }).toList();
 

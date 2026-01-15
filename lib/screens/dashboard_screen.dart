@@ -2,14 +2,19 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:task_flow/models/task.dart';
+import 'package:task_flow/providers/navigation_provider.dart';
 import 'package:task_flow/providers/task_provider.dart';
 import 'package:task_flow/screens/all_tasks_screen.dart';
 import 'package:task_flow/screens/create_update_task_screen.dart';
 import 'package:task_flow/screens/profile_screen.dart';
+import 'package:task_flow/screens/teams_screen.dart';
 import 'package:task_flow/routes/app_page_route.dart';
 import 'package:task_flow/widgets/bottom_nav_bar.dart';
 import 'package:task_flow/widgets/task_card.dart';
-import 'package:task_flow/models/task.dart';
+
+import 'package:task_flow/screens/schedule_screen.dart';
+import 'package:task_flow/screens/teams_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -18,12 +23,11 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  // int _selectedIndex = 0;
 
   static const List<Widget> _screens = <Widget>[
     DashboardContent(),
-    Scaffold(body: Center(child: Text('Schedule'))),
-    Scaffold(body: Center(child: Text('Team'))),
+    ScheduleScreen(),
+    TeamsScreen(),
     ProfileScreen(),
   ];
 
@@ -31,14 +35,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     
     final navProvier = Provider.of<NavigationProvider>(context);
-    final selectedIndex = navProvier.currentIndex;
+    final selectedIndex = navProvier.selectedIndex;
     final theme = Theme.of(context);
 
     return Scaffold(
       body: _screens.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: selectedIndex,
-        onItemTapped: navProvier.updateIndex,
+        onItemTapped: navProvier.setIndex,
       ),
       floatingActionButton: selectedIndex == 0
           ? FloatingActionButton(
@@ -58,7 +62,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 }
-
 class DashboardContent extends StatelessWidget {
   const DashboardContent({super.key});
 
@@ -149,8 +152,9 @@ class DashboardContent extends StatelessWidget {
                 ..sort((a, b) => (b.id ?? 0).compareTo(a.id ?? 0));
               final displayTasks = recentTasks.take(3).toList();
 
-              return Column(
+              return Wrap(
                 spacing: 15,
+                runSpacing: 15,
                 children: [
                   for (final task in displayTasks)
                     SizedBox(
@@ -164,15 +168,5 @@ class DashboardContent extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class NavigationProvider extends ChangeNotifier {
-  int _currentIndex = 0;
-  int get currentIndex => _currentIndex;
-
-  void updateIndex(int index) {
-    _currentIndex = index;
-    notifyListeners();
   }
 }

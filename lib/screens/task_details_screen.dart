@@ -49,7 +49,7 @@ class TaskDetailsScreen extends StatelessWidget {
               curve: Curves.easeInOut,
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: _getStatusColor(task.status).withValues(alpha: 0.8),
+                color: _getStatusColor(task.status?? 'pending').withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(
                   task.status == 'completed' ? 24 : 12,
                 ),
@@ -58,13 +58,13 @@ class TaskDetailsScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
-                    _getStatusIcon(task.status),
+                    _getStatusIcon(task.status ?? 'pending'),
                     color: Colors.white,
                     size: 16,
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    task.status.toUpperCase().replaceAll('_', ' '),
+                    task.status?.toUpperCase().replaceAll('_', ' ') ?? 'PENDING',
                     style: GoogleFonts.inter(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
