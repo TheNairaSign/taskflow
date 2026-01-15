@@ -17,6 +17,12 @@ class ScheduleTimelineItem extends StatelessWidget {
     final startTime = task.startTime != null ? timeFormat.format(DateTime(2023, 1, 1, task.startTime!.hour, task.startTime!.minute)) : '';
     final endTime = task.endTime != null ? timeFormat.format(DateTime(2023, 1, 1, task.endTime!.hour, task.endTime!.minute)) : '';
 
+    final mockUsers = [
+      'assets/avatars/afro-kid.jpg',
+      'assets/avatars/brown-hair-girl.jpg',
+      'assets/avatars/girl.jpg',
+    ];
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0,),
       child: IntrinsicHeight(
@@ -115,7 +121,7 @@ class ScheduleTimelineItem extends StatelessWidget {
                           return CircleAvatar(
                             radius: 13,
                             backgroundColor: Colors.grey.withValues(alpha: .2),
-                            backgroundImage: NetworkImage(imgList[index]),
+                            backgroundImage: AssetImage(mockUsers[index]),
                           );
                         }),
                       ],

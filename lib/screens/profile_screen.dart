@@ -59,16 +59,16 @@ class ProfileScreen extends StatelessWidget {
                 title: 'Notifications',
                 onTap: () {},
               ),
-              _buildSettingsTile(
-                context,
-                icon: EvaIcons.moonOutline,
-                title: 'Dark Mode',
-                trailing: Switch(
-                  value: theme.brightness == Brightness.dark,
-                  onChanged: (value) {},
-                  activeColor: theme.colorScheme.primary,
-                ),
-              ),
+              // _buildSettingsTile(
+              //   context,
+              //   icon: EvaIcons.moonOutline,
+              //   title: 'Dark Mode',
+              //   trailing: Switch(
+              //     value: theme.brightness == Brightness.dark,
+              //     onChanged: (value) {},
+              //     activeColor: theme.colorScheme.primary,
+              //   ),
+              // ),
               _buildSettingsTile(
                 context,
                 icon: EvaIcons.globe2Outline,
@@ -76,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                 trailing: Text(
                   'English',
                   style: GoogleFonts.inter(
-                    color: theme.colorScheme.onSurface.withOpacity(0.6),
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),
                 ),
                 onTap: () {},
@@ -113,7 +113,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.error.withOpacity(0.1),
+              backgroundColor: theme.colorScheme.error.withValues(alpha: 0.1),
               minimumSize: const Size(double.infinity, 56),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -126,7 +126,7 @@ class ProfileScreen extends StatelessWidget {
             child: Text(
               'TASKFLOW V2.4.0 (API V4)',
               style: GoogleFonts.inter(
-                color: theme.colorScheme.onSurface.withOpacity(0.4),
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
               ),
             ),
           ),
@@ -137,16 +137,16 @@ class ProfileScreen extends StatelessWidget {
 
   Widget _buildProfileHeader(BuildContext context) {
     final theme = Theme.of(context);
+    final authProvider = Provider.of<AuthProvider>(context);
     return Column(
       children: [
         const CircleAvatar(
           radius: 50,
-          backgroundImage: NetworkImage(
-              'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&h=100&fit=crop'),
+          backgroundImage: AssetImage('assets/profile.jpg'),
         ),
         const SizedBox(height: 16),
         Text(
-          'Alex Rivera',
+          authProvider.username ?? 'Alex Rivera',
           style: GoogleFonts.inter(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -154,10 +154,10 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          'alex.rivera@taskflow.io',
+          authProvider.email ?? 'alex.rivera@taskflow.io',
           style: GoogleFonts.inter(
             fontSize: 16,
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         const SizedBox(height: 16),
@@ -170,7 +170,7 @@ class ProfileScreen extends StatelessWidget {
               color: theme.colorScheme.primary,
             ),
           ),
-          backgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+          backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
         ),
       ],
     );
@@ -212,7 +212,7 @@ class ProfileScreen extends StatelessWidget {
           Text(
             label,
             style: GoogleFonts.inter(
-              color: theme.colorScheme.onSurface.withOpacity(0.6),
+              color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -234,7 +234,7 @@ class ProfileScreen extends StatelessWidget {
           title,
           style: GoogleFonts.inter(
             fontWeight: FontWeight.bold,
-            color: theme.colorScheme.onSurface.withOpacity(0.6),
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
         const SizedBox(height: 16),
@@ -260,7 +260,7 @@ class ProfileScreen extends StatelessWidget {
       }) {
     final theme = Theme.of(context);
     return ListTile(
-      leading: Icon(icon, color: theme.colorScheme.onSurface.withOpacity(0.8)),
+      leading: Icon(icon, color: theme.colorScheme.onSurface.withValues(alpha: 0.8)),
       title: Text(
         title,
         style: GoogleFonts.inter(

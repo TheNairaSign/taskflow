@@ -19,12 +19,11 @@ class TeamProvider with ChangeNotifier {
 
     // Mock data
     final mockUsers = [
-      User(id: '1', name: 'Alice', avatarUrl: 'https://i.pravatar.cc/150?u=alice'),
-      User(id: '2', name: 'Bob', avatarUrl: 'https://i.pravatar.cc/150?u=bob'),
-      User(id: '3', name: 'Charlie', avatarUrl: 'https://i.pravatar.cc/150?u=charlie'),
-      User(id: '4', name: 'David', avatarUrl: 'https://i.pravatar.cc/150?u=david'),
-      User(id: '5', name: 'Eve', avatarUrl: 'https://i.pravatar.cc/150?u=eve'),
-      User(id: '6', name: 'Frank', avatarUrl: 'https://i.pravatar.cc/150?u=frank'),
+      User(id: '1', name: 'Alice', avatarUrl: 'assets/avatars/afro-kid.jpg'),
+      User(id: '2', name: 'Bob', avatarUrl: 'assets/avatars/brown-hair-girl.jpg'),
+      User(id: '3', name: 'Charlie', avatarUrl: 'assets/avatars/girl.jpg'),
+      User(id: '4', name: 'David', avatarUrl: 'assets/avatars/flat-top-boy.jpg'),
+      User(id: '5', name: 'Eve', avatarUrl: 'assets/avatars/braid-girl.jpg'),
     ];
 
     _teams = [
@@ -41,7 +40,7 @@ class TeamProvider with ChangeNotifier {
       Team(
         id: 'product',
         name: 'Product Design',
-        members: [mockUsers[5], mockUsers[0]],
+        members: [mockUsers[4], mockUsers[0]],
       ),
     ];
 
@@ -51,12 +50,11 @@ class TeamProvider with ChangeNotifier {
 
   User getUser(String id) {
     final mockUsers = [
-      User(id: '1', name: 'Alice', avatarUrl: 'https://i.pravatar.cc/150?u=alice'),
-      User(id: '2', name: 'Bob', avatarUrl: 'https://i.pravatar.cc/150?u=bob'),
-      User(id: '3', name: 'Charlie', avatarUrl: 'https://i.pravatar.cc/150?u=charlie'),
-      User(id: '4', name: 'David', avatarUrl: 'https://i.pravatar.cc/150?u=david'),
-      User(id: '5', name: 'Eve', avatarUrl: 'https://i.pravatar.cc/150?u=eve'),
-      User(id: '6', name: 'Frank', avatarUrl: 'https://i.pravatar.cc/150?u=frank'),
+      User(id: '1', name: 'Alice', avatarUrl: 'assets/avatars/afro-kid.jpg'),
+      User(id: '2', name: 'Bob', avatarUrl: 'assets/avatars/brown-hair-girl.jpg'),
+      User(id: '3', name: 'Charlie', avatarUrl: 'assets/avatars/girl.jpg'),
+      User(id: '4', name: 'David', avatarUrl: 'assets/avatars/flat-top-boy.jpg'),
+      User(id: '5', name: 'Eve', avatarUrl: 'assets/avatars/braid-girl.jpg'),
     ];
 
     return mockUsers.firstWhere((user) => user.id == id);

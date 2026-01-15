@@ -18,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
   bool _obscureText = true;
   bool _isLoading = false;
 
@@ -67,11 +68,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 40),
                 TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'USERNAME',
+                    labelStyle: GoogleFonts.inter(
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      fontWeight: FontWeight.w600,
+                    ),
+                    filled: true,
+                    fillColor: theme.colorScheme.surface,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your username';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'EMAIL ADDRESS',
                     labelStyle: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
                       fontWeight: FontWeight.w600,
                     ),
                     filled: true,
@@ -98,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     labelText: 'PASSWORD',
                     labelStyle: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
                       fontWeight: FontWeight.w600,
                     ),
                     filled: true,
@@ -112,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _obscureText
                             ? EvaIcons.eyeOffOutline
                             : EvaIcons.eyeOutline,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                        color: theme.colorScheme.onSurface.withOpacity(0.6),
                       ),
                       onPressed: () {
                         setState(() {
@@ -155,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                           Provider.of<AuthProvider>(context, listen: false)
                               .login(
+                            _usernameController.text,
                             _emailController.text,
                             _passwordController.text,
                           )
@@ -190,9 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 20,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                theme.colorScheme.onPrimary,
-                              ),
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                             ),
                           )
                         : Row(
@@ -225,16 +248,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Create Account',
-                        style: GoogleFonts.inter(
-                          color: theme.colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                    // TextButton(
+                    //   onPressed: () {
+                    //     Navigator.of(context).push(
+                    //       AppPageRoute(
+                    //         builder: (context) => SignUpScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: Text(
+                    //     'Create Account',
+                    //     style: GoogleFonts.inter(
+                    //       color: theme.colorScheme.primary,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

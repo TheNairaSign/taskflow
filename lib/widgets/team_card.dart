@@ -59,7 +59,7 @@ class TeamCard extends StatelessWidget {
                   return CircleAvatar(
                     backgroundColor: Colors.grey.withValues(alpha: .2),
                     radius: 15,
-                    backgroundImage: NetworkImage(user.avatarUrl),
+                    backgroundImage: AssetImage(user.avatarUrl),
                   );
                 }),
                 if (team.members.length > 3)

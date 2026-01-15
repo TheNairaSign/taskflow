@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/models/task.dart';
+import 'package:task_flow/providers/auth_provider.dart';
 import 'package:task_flow/providers/navigation_provider.dart';
 import 'package:task_flow/providers/task_provider.dart';
 import 'package:task_flow/screens/all_tasks_screen.dart';
@@ -79,6 +80,7 @@ class DashboardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     final theme = Theme.of(context);
     return SafeArea(
       child: ListView(
@@ -89,24 +91,23 @@ class DashboardContent extends StatelessWidget {
             children: [
               const CircleAvatar(
                 radius: 24,
-                backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=500&h=500&fit=crop'),
+                backgroundImage: AssetImage('assets/profile.jpg'),
               ),
               const SizedBox(width: 16),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Alex Rivera',
+                    authProvider.username ?? 'Alex Rivera',
                     style: GoogleFonts.inter(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'alex.r@taskflow.io',
+                    authProvider.email ?? 'alex.r@taskflow.io',
                     style: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                      color: theme.colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ),
                 ],
