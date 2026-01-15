@@ -181,9 +181,25 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                     child: Text(team.name),
                   );
                 }).toList(),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Team',
-                  border: OutlineInputBorder(),
+                  floatingLabelStyle: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.grey.withValues(alpha: .3),
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),  
+                    borderSide: BorderSide(
+                      color: Colors.grey.withValues(alpha: .3),
+                      width: 1,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -200,9 +216,25 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                     child: Text(priority.toString().split('.').last.toUpperCase()),
                   );
                 }).toList(),
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Priority',
-                  border: OutlineInputBorder(),
+                  floatingLabelStyle: theme.textTheme.labelLarge?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.grey.withValues(alpha: .3),
+                      width: 1,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),  
+                    borderSide: BorderSide(
+                      color: Colors.grey.withValues(alpha: .3),
+                      width: 1,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 40),
@@ -275,9 +307,19 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                 GoogleFonts.inter(color: theme.colorScheme.onSurface.withValues(alpha: 0.4)),
             filled: true,
             fillColor: theme.colorScheme.surface,
-            border: OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
+              borderSide: BorderSide(
+                color: Colors.grey.withValues(alpha: .3),
+                width: 1,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),  
+              borderSide: BorderSide(
+                color: Colors.grey.withValues(alpha: .3),
+                width: 1,
+              ),
             ),
           ),
           validator: (value) {

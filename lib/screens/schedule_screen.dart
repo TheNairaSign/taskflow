@@ -41,10 +41,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> with SingleTickerProvid
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         title: Text(
           'Schedule',
           style: GoogleFonts.inter(

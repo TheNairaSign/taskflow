@@ -38,7 +38,11 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              final navProvider = Provider.of<NavigationProvider>(context, listen: false);
+              navProvider.setIndex(1);
+              Navigator.of(context).pop();
+            },
             icon: const Icon(EvaIcons.calendarOutline),
           ),
           IconButton(

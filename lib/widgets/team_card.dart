@@ -30,7 +30,7 @@ class TeamCard extends StatelessWidget {
                     color: Colors.grey.withValues(alpha: .2),
                     borderRadius: BorderRadius.circular(10)
                   ),
-                  child: Icon(Icons.announcement, color: Colors.blue,),
+                  child: Icon(Icons.campaign, color: Colors.blue,),
                 ),
                 const SizedBox(width: 8.0),
                 Column(
@@ -57,6 +57,7 @@ class TeamCard extends StatelessWidget {
               children: [
                 ...team.members.take(3).map((user) {
                   return CircleAvatar(
+                    backgroundColor: Colors.grey.withValues(alpha: .2),
                     radius: 15,
                     backgroundImage: NetworkImage(user.avatarUrl),
                   );

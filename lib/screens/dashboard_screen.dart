@@ -14,7 +14,6 @@ import 'package:task_flow/widgets/bottom_nav_bar.dart';
 import 'package:task_flow/widgets/task_card.dart';
 
 import 'package:task_flow/screens/schedule_screen.dart';
-import 'package:task_flow/screens/teams_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -55,7 +54,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 );
               },
               backgroundColor: theme.colorScheme.primary,
-              child: const Icon(EvaIcons.plus),
+              child: const Icon(EvaIcons.plus, color: Colors.white,),
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

@@ -10,8 +10,7 @@ class AnimatedListItem extends StatefulWidget {
   State<AnimatedListItem> createState() => _AnimatedListItemState();
 }
 
-class _AnimatedListItemState extends State<AnimatedListItem>
-    with SingleTickerProviderStateMixin {
+class _AnimatedListItemState extends State<AnimatedListItem> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 

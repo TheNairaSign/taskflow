@@ -108,8 +108,7 @@ class _ScheduleCalendarScreenState extends State<ScheduleCalendarScreen> {
                 ),
                 if (tasks.isNotEmpty)
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: theme.colorScheme.primary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(999),
@@ -148,8 +147,7 @@ class _ScheduleCalendarScreenState extends State<ScheduleCalendarScreen> {
                   return AnimatedListItem(
                     index: index,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 0.0, vertical: 4.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
                       child: TaskListItem(
                         task: tasks[index],
                       ),

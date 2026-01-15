@@ -16,33 +16,26 @@ class TeamsScreen extends StatelessWidget {
     final teams = teamProvider.teams;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Teams',
+          style: GoogleFonts.inter(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+           IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.settings_outlined),
+            ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 20,
-                  ),
-                  const Spacer(),
-                  Text(
-                    'Teams',
-                    style: GoogleFonts.inter(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.settings_outlined),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
               TextField(
                 decoration: InputDecoration(
                   hintText: 'Search teams or departments',
