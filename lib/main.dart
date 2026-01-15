@@ -6,8 +6,8 @@ import 'package:task_flow/providers/auth_provider.dart';
 import 'package:task_flow/providers/task_provider.dart';
 import 'package:task_flow/providers/team_provider.dart';
 import 'package:task_flow/providers/navigation_provider.dart';
-import 'package:task_flow/screens/dashboard_screen.dart';
 import 'package:task_flow/screens/login_screen.dart';
+import 'package:task_flow/screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,9 +69,7 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: ThemeMode.system,
-            home: auth.isAuthenticated
-                ? const DashboardScreen()
-                : const LoginScreen(),
+            home: const SplashScreen(),
             routes: {
               '/login': (context) => const LoginScreen(),
             },

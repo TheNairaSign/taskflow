@@ -70,9 +70,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   controller: _usernameController,
                   decoration: InputDecoration(
-                    labelText: 'USERNAME',
+                    labelText: 'Username',
                     labelStyle: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontWeight: FontWeight.w600,
                     ),
                     filled: true,
@@ -93,9 +93,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   controller: _emailController,
                   decoration: InputDecoration(
-                    labelText: 'EMAIL ADDRESS',
+                    labelText: 'Email Address',
                     labelStyle: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontWeight: FontWeight.w600,
                     ),
                     filled: true,
@@ -120,9 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   obscureText: _obscureText,
                   decoration: InputDecoration(
-                    labelText: 'PASSWORD',
+                    labelText: 'Password',
                     labelStyle: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       fontWeight: FontWeight.w600,
                     ),
                     filled: true,
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _obscureText
                             ? EvaIcons.eyeOffOutline
                             : EvaIcons.eyeOutline,
-                        color: theme.colorScheme.onSurface.withOpacity(0.6),
+                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                       onPressed: () {
                         setState(() {
@@ -152,19 +152,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 10),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Forgot password?',
-                      style: GoogleFonts.inter(
-                        color: theme.colorScheme.primary,
-                      ),
-                    ),
-                  ),
-                ),
+                // const SizedBox(height: 10),
+                // Align(
+                //   alignment: Alignment.centerRight,
+                //   child: TextButton(
+                //     onPressed: () {},
+                //     child: Text(
+                //       'Forgot password?',
+                //       style: GoogleFonts.inter(
+                //         color: theme.colorScheme.primary,
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _isLoading
@@ -177,14 +177,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() {
                             _isLoading = true;
                           });
-                          Provider.of<AuthProvider>(context, listen: false)
-                              .login(
+                          Provider.of<AuthProvider>(context, listen: false).login(
                             _usernameController.text,
                             _emailController.text,
                             _passwordController.text,
-                          )
-                              .then((_) {
-                                if(!context.mounted) return;
+                          ).then((_) {
+                            if(!context.mounted) return;
                             Navigator.of(context).pushReplacement(
                               AppPageRoute(
                                 builder: (context) =>
@@ -238,33 +236,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "New to TaskFlow?",
-                      style: GoogleFonts.inter(
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                      ),
-                    ),
-                    // TextButton(
-                    //   onPressed: () {
-                    //     Navigator.of(context).push(
-                    //       AppPageRoute(
-                    //         builder: (context) => SignUpScreen(),
-                    //       ),
-                    //     );
-                    //   },
-                    //   child: Text(
-                    //     'Create Account',
-                    //     style: GoogleFonts.inter(
-                    //       color: theme.colorScheme.primary,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    // ),
-                  ],
                 ),
               ],
             ),

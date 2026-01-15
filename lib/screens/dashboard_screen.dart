@@ -89,8 +89,9 @@ class DashboardContent extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 24,
+                backgroundColor: Colors.grey.withValues(alpha: .2),
                 backgroundImage: AssetImage('assets/profile.jpg'),
               ),
               const SizedBox(width: 16),
@@ -107,7 +108,7 @@ class DashboardContent extends StatelessWidget {
                   Text(
                     authProvider.email ?? 'alex.r@taskflow.io',
                     style: GoogleFonts.inter(
-                      color: theme.colorScheme.onSurface.withOpacity(0.6),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                 ],
