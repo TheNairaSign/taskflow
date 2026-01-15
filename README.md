@@ -37,8 +37,14 @@ To run this project locally, follow these steps:
     ```
 
 ## GitHub Repository
-[YOUR_GITHUB_REPOSITORY_LINK]
+['https://github.com/TheNairaSign/taskflow']
 
 ## APK Build
 You can download the latest APK from [YOUR_APK_BUILD_LINK]
+
+Screenshots below were taken from the release build on Android.
+
+![Login Screen](./screenshots/login_screen.png)
+![Dashboard Screen](./screenshots/dashboard_screen.png)
+![Task List Screen](./screenshots/task_list_screen.png)
 

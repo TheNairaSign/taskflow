@@ -121,6 +121,26 @@ class DashboardContent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30),
+          Card(
+            margin: EdgeInsets.zero,
+            color: theme.colorScheme.surface,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline, color: theme.colorScheme.primary),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      'Swipe left on tasks to delete them.',
+                      style: GoogleFonts.inter(color: theme.colorScheme.primary),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

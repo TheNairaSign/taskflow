@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:task_flow/providers/auth_provider.dart';
+import 'package:task_flow/screens/edit_profile_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -18,7 +19,11 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+              );
+            },
             icon: const Icon(EvaIcons.edit2Outline),
           ),
         ],
@@ -100,8 +105,7 @@ class ProfileScreen extends StatelessWidget {
           ElevatedButton.icon(
             onPressed: () {
               Provider.of<AuthProvider>(context, listen: false).logout();
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/login', (route) => false);
+              Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
             },
             icon: Icon(EvaIcons.logOutOutline, color: theme.colorScheme.error),
             label: Text(
@@ -140,7 +144,8 @@ class ProfileScreen extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
     return Column(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
+          backgroundColor: Colors.grey.withValues(alpha: .2),
           radius: 50,
           backgroundImage: AssetImage('assets/profile.jpg'),
         ),
@@ -160,24 +165,23 @@ class ProfileScreen extends StatelessWidget {
             color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
           ),
         ),
-        const SizedBox(height: 16),
-        Chip(
-          avatar: Icon(EvaIcons.star, color: theme.colorScheme.primary),
-          label: Text(
-            'Pro Plan Member',
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.bold,
-              color: theme.colorScheme.primary,
-            ),
-          ),
-          backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
-        ),
+        // const SizedBox(height: 16),
+        // Chip(
+        //   avatar: Icon(EvaIcons.star, color: theme.colorScheme.primary),
+        //   label: Text(
+        //     'Pro Plan Member',
+        //     style: GoogleFonts.inter(
+        //       fontWeight: FontWeight.bold,
+        //       color: theme.colorScheme.primary,
+        //     ),
+        //   ),
+        //   backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.1),
+        // ),
       ],
     );
   }
 
   Widget _buildStats(BuildContext context) {
-    final theme = Theme.of(context);
     return Row(
       children: [
         Expanded(

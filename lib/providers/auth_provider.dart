@@ -52,4 +52,12 @@ class AuthProvider with ChangeNotifier {
     await sharedPreferences.remove('email');
     notifyListeners();
   }
+
+  Future<void> updateProfile(String username, String email) async {
+    _username = username;
+    _email = email;
+    await sharedPreferences.setString('username', username);
+    await sharedPreferences.setString('email', email);
+    notifyListeners();
+  }
 }

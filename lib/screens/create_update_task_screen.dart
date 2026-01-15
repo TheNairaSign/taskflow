@@ -6,6 +6,7 @@ import 'package:task_flow/models/task.dart';
 import 'package:task_flow/models/task_priority.dart';
 import 'package:task_flow/providers/task_provider.dart';
 import 'package:task_flow/providers/team_provider.dart';
+import 'package:another_flushbar/flushbar.dart';
 
 class CreateUpdateTaskScreen extends StatefulWidget {
   final Task? task;
@@ -188,14 +189,14 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: Colors.grey.withValues(alpha: .3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),  
                     borderSide: BorderSide(
-                      color: Colors.grey.withValues(alpha: .3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -223,14 +224,14 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
-                      color: Colors.grey.withValues(alpha: .3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),  
                     borderSide: BorderSide(
-                      color: Colors.grey.withValues(alpha: .3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                       width: 1,
                     ),
                   ),
@@ -266,7 +267,7 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
                         style: GoogleFonts.inter(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: isUpdate ? Colors.white : theme.colorScheme.onPrimary,
+                          color: Colors.white,
                         ),
                       ),
                 ),
@@ -309,14 +310,14 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide(
-                color: Colors.grey.withValues(alpha: .3),
+                color: Colors.grey.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),  
               borderSide: BorderSide(
-                color: Colors.grey.withValues(alpha: .3),
+                color: Colors.grey.withValues(alpha: 0.3),
                 width: 1,
               ),
             ),
@@ -439,14 +440,44 @@ class _CreateUpdateTaskScreenState extends State<CreateUpdateTaskScreen> {
 
     if (widget.task == null) {
       taskProvider.createTask(task);
+      Navigator.of(context).pop();
+
+      showFlushbar(context, 'Task Created', 'Your task has been successfully created.', Colors.green);
     } else {
       taskProvider.updateTask(task);
+      Navigator.of(context).pop();
+      showFlushbar(context, 'Task Updated', 'Your task has been successfully updated.', Colors.green);
     }
     if (mounted) {
       setState(() {
         _isSubmitting = false;
       });
-      Navigator.of(context).pop();
     }
   }
+
+}
+
+void showFlushbar(BuildContext context, String title, String message, Color color) {
+  Flushbar(
+    titleText: Text(title, style: Theme.of(context).textTheme.bodyMedium,),
+    message: message,
+    icon: Icon(
+      Icons.info_outline,
+      size: 28.0,
+      color: color,
+    ),
+    leftBarIndicatorColor: color,
+    duration: const Duration(seconds: 3),
+    flushbarPosition: FlushbarPosition.TOP,
+    margin: const EdgeInsets.all(8),
+    borderRadius: BorderRadius.circular(8),
+    backgroundColor: Theme.of(context).colorScheme.surface,
+    boxShadows: [
+      BoxShadow(
+        color: Colors.black.withValues(alpha: 0.2),
+        offset: const Offset(0.0, 2.0),
+        blurRadius: 3.0,
+      )
+    ],
+  ).show(context);
 }
