@@ -22,6 +22,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  double _fabTurns = 0;
 
   static const List<Widget> _screens = <Widget>[
     DashboardContent(),
@@ -45,7 +46,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       floatingActionButton: selectedIndex == 0
           ? FloatingActionButton(
-              onPressed: () {
+              onPressed: () async {
+                setState(() {
+                  _fabTurns += 1;
+                });
+                await Future.delayed(const Duration(milliseconds: 150));
+                if (!context.mounted) return;
                 Navigator.push(
                   context,
                   AppPageRoute(
@@ -54,7 +60,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 );
               },
               backgroundColor: theme.colorScheme.primary,
-              child: const Icon(EvaIcons.plus, color: Colors.white,),
+              child: AnimatedRotation(
+                turns: _fabTurns,
+                duration: const Duration(milliseconds: 1000),
+                child: const Icon(
+                  EvaIcons.plus,
+                  color: Colors.white,
+                ),
+              ),
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

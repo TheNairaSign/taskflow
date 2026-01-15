@@ -76,6 +76,14 @@ class _ScheduleCalendarScreenState extends State<ScheduleCalendarScreen> {
                   ),
                 ),
                 calendarStyle: CalendarStyle(
+                  outsideDaysVisible: false,
+                  cellMargin: const EdgeInsets.all(6),
+                  defaultTextStyle: GoogleFonts.inter(
+                    color: theme.colorScheme.onSurface,
+                  ),
+                  weekendTextStyle: GoogleFonts.inter(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                  ),
                   todayDecoration: BoxDecoration(
                     color: theme.colorScheme.primary.withValues(alpha: 0.4),
                     shape: BoxShape.circle,
@@ -88,6 +96,8 @@ class _ScheduleCalendarScreenState extends State<ScheduleCalendarScreen> {
                     color: theme.colorScheme.secondary,
                     shape: BoxShape.circle,
                   ),
+                  markersAlignment: Alignment.bottomCenter,
+                  markersMaxCount: 3,
                 ),
               ),
             ),

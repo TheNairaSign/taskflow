@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:task_flow/models/task.dart';
+import 'package:task_flow/providers/task_provider.dart';
 
 class ScheduleTimelineItem extends StatelessWidget {
   final Task task;
@@ -68,9 +70,36 @@ class ScheduleTimelineItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      task.title,
-                      style: theme.textTheme.bodyLarge,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            task.title,
+                            style: theme.textTheme.bodyLarge,
+                          ),
+                        ),
+                        Checkbox(
+                          value: task.status == 'completed',
+                          onChanged: (val) {
+                            final provider = Provider.of<TaskProvider>(context, listen: false);
+                            final updated = Task(
+                              id: task.id,
+                              userId: task.userId,
+                              title: task.title,
+                              description: task.description,
+                              project: task.project,
+                              priority: task.priority,
+                              scheduledDate: task.scheduledDate,
+                              startTime: task.startTime,
+                              endTime: task.endTime,
+                              teamId: task.teamId,
+                              status: (val ?? false) ? 'completed' : 'pending',
+                            );
+                            provider.updateTask(updated);
+                          },
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8.0),
                     Text('$startTime - $endTime', style: theme.textTheme.bodyMedium,),
@@ -82,11 +111,9 @@ class ScheduleTimelineItem extends StatelessWidget {
                       children: [
                         ...List.generate(3, (index) {
                           return CircleAvatar(
-                            radius: 15,
+                            radius: 13,
                             backgroundColor: Colors.grey.withValues(alpha: .2),
-                            backgroundImage: NetworkImage(
-                              'https://via.placeholder.com/150?text=Image+${index + 1}',
-                            ),
+                            backgroundImage: NetworkImage(imgList[index]),
                           );
                         }),
                       ],
@@ -101,3 +128,9 @@ class ScheduleTimelineItem extends StatelessWidget {
     );
   }
 }
+
+final imgList = [
+  'https://i.pravatar.cc/150?u=alice',
+  'https://i.pravatar.cc/150?u=bob',
+  'https://i.pravatar.cc/150?u=charlie',
+];

@@ -59,6 +59,8 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
         padding: const EdgeInsets.all(24),
         children: [
           TextField(
+            controller: _searchController,
+            onChanged: (_) => setState(() {}),
             decoration: InputDecoration(
               hintText: 'Search tasks, projects...',
               prefixIcon: const Icon(EvaIcons.searchOutline),
@@ -88,12 +90,16 @@ class _AllTasksScreenState extends State<AllTasksScreen> {
               if (taskProvider.tasks.isEmpty) {
                 return const Center(child: CircularProgressIndicator());
               }
+              final query = _searchController.text.trim().toLowerCase();
               final filteredTasks = taskProvider.tasks.where((task) {
-                if (_selectedFilter == 'All') {
-                  return true;
-                }
-                return task.status?.toLowerCase() ==
-                    _selectedFilter.toLowerCase().replaceAll(' ', '_');
+                final matchesSearch = query.isEmpty ||
+                    task.title.toLowerCase().contains(query) ||
+                    task.project.toLowerCase().contains(query) ||
+                    task.description.toLowerCase().contains(query);
+                if (!matchesSearch) return false;
+                if (_selectedFilter == 'All') return true;
+                final normalized = (task.status ?? 'pending').toLowerCase();
+                return normalized == _selectedFilter.toLowerCase().replaceAll(' ', '_');
               }).toList();
 
               return ListView.separated(
